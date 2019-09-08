@@ -1,21 +1,67 @@
-[gd_scene format=2]
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Mob.gd" type="Script" id=1]
+[ext_resource path="res://dodge_assets/art/enemySwimming_1.png" type="Texture" id=2]
+[ext_resource path="res://dodge_assets/art/enemySwimming_2.png" type="Texture" id=3]
+[ext_resource path="res://dodge_assets/art/enemyWalking_1.png" type="Texture" id=4]
+[ext_resource path="res://dodge_assets/art/enemyWalking_2.png" type="Texture" id=5]
+[ext_resource path="res://dodge_assets/art/enemyFlyingAlt_1.png" type="Texture" id=6]
+[ext_resource path="res://dodge_assets/art/enemyFlyingAlt_2.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "swim",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "walk",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "fly",
+"speed": 3.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 38.512
+height = 25.4691
 
 [node name="Node2D" type="Node2D"]
+position = Vector2( 103.636, 63.2778 )
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="Mob" type="RigidBody2D" parent="."]
+position = Vector2( -19.3582, -7.16973 )
+collision_mask = 0
 gravity_scale = 0.0
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="RigidBody2D"]
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Mob"]
+position = Vector2( 16.1101, 17.937 )
+scale = Vector2( 0.75, 0.75 )
+frames = SubResource( 1 )
+animation = "fly"
+playing = true
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mob"]
+position = Vector2( 16.4423, 18.2692 )
+rotation = 1.5708
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Mob"]
+position = Vector2( 20.0961, 19.2657 )
 __meta__ = {
 "_edit_group_": true
 }
