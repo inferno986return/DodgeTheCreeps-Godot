@@ -8,18 +8,17 @@ func _ready():
 
 func new_game():
 	score = 0
+	$Hud.update_score(score)
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$Hud.show_message("Get Ready")
-	$Hud.update_score()
+	$Music.play()
 
 func game_over():
+	$GameOver.play()
 	$ScoreTimer.stop()
 	$MobTime.stop()
 	$Hud.game_over()
-
-func _on_ScoreTimer_timeout():
-	score += 1
 
 func _on_MobTimer_timeout():
 	$MobPath/MobSpawnLocation.set_offset(randi())
@@ -30,4 +29,12 @@ func _on_MobTimer_timeout():
 	direction += rand_range(-PI/4, PI/4)
 	mob.rotation = direction
 	mob.set_linear_velocity(Vector2(rand_range(mob.min_speed, mob.max_speed), 0)).rotated(direction)
-	$$Hud.connect("start_game", mob, "_on_start_game")
+	$Hud.connect("start_game", mob, "_on_start_game")
+
+func _on_StartTimer_timeout():
+	$MobTimer.start()
+	$ScoreTimer.start()
+
+func _on_ScoreTimer_timeout():
+	score += 1
+	$HUD.update_score(score)
